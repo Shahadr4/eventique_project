@@ -26,6 +26,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
      final cart = Provider.of<Cart>(context);
+     cart.getCartlist();  
     
     return Scaffold(
        
