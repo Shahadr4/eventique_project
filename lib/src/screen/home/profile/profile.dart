@@ -185,9 +185,7 @@ class _ProfileState extends State<Profile> {
       });
     }
   }
-  void save(filepath)async{
-
-  }
+  
 
   //showimageDailog
   void imagePick() {
@@ -253,22 +251,12 @@ class _ProfileState extends State<Profile> {
     }
 
     return Scaffold( 
-      backgroundColor: Color.fromARGB(220, 224, 224, 222),
+      backgroundColor: Color.fromARGB(255, 204, 204, 204),
+       
       extendBody: true, 
       body: SafeArea(
         child: 
-           _isloading ?
-               Center(
-                 child: SpinKitFadingCircle(
-                 itemBuilder: (BuildContext context, int index) {
-                   return DecoratedBox(
-                     decoration: BoxDecoration(
-                       color: index.isEven ? Color.fromARGB(255, 237, 236, 236) : Color.fromARGB(255, 0, 0, 0),
-                     ),
-                   );
-                 },
-               ),
-               ): 
+           
         SingleChildScrollView( 
           physics: const NeverScrollableScrollPhysics(), 
           child: Padding(
@@ -289,7 +277,18 @@ class _ProfileState extends State<Profile> {
                       backgroundColor: Colors.black, 
                      
                       radius: 68,
-                      child: CircleAvatar(
+                      child:_isloading ?
+               Center(
+                 child: SpinKitFadingCircle(
+                 itemBuilder: (BuildContext context, int index) {
+                   return DecoratedBox(
+                     decoration: BoxDecoration(
+                       color: index.isEven ? Color.fromARGB(255, 237, 236, 236) : Color.fromARGB(255, 0, 0, 0),
+                     ),
+                   );
+                 },
+               ),
+               ):  CircleAvatar(
                         backgroundColor: Colors.white, 
                        
                        radius: 66, 
@@ -301,10 +300,10 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Positioned(
-                    left:98, 
+                    left:96,   
                         
                       child: CircleAvatar(
-                        backgroundColor: tButtonColor,
+                        backgroundColor: tButtonColor,  
                         child:  GestureDetector(
                               onTap: () {
                                 imagePick(); 
@@ -312,7 +311,7 @@ class _ProfileState extends State<Profile> {
                                   
                               },
                               child: const Center(
-                                  child: Icon(Icons.camera_alt_rounded,color: Colors.black,)),
+                                  child: Icon(Icons.camera_alt_rounded,color: Color.fromARGB(255, 255, 255, 255),)),
                              ),
                            
                         
