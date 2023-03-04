@@ -1,19 +1,28 @@
+
+import 'package:eventique/src/model/cart.dart';
 import 'package:eventique/src/screen/home/Homepage/details/detials_screen.dart';
 import 'package:eventique/src/screen/home/Homepage/widget/product_card.dart';
 import 'package:eventique/src/screen/home/Homepage/widget/section_tile.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 
 import '../../../../model/product.dart';
 import 'all_list_product.dart';
 
 class Popular extends StatelessWidget {
-  const Popular({
+   const Popular({
     super.key,
   });
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
+     final cart = Provider.of<Cart>(context);
+
     return Column(
       children: [
         SectionTile( 
@@ -24,15 +33,21 @@ class Popular extends StatelessWidget {
         ),
           SingleChildScrollView(
               scrollDirection: Axis.horizontal, 
-               child: Row( 
-                children: List.generate(list_Product.length, (index) =>Padding(
+               child: 
+               Consumer<Cart>(
+        builder: (context, cart, child) =>
+               
+               
+               Row( 
+                children: List.generate(cart.products.length, (index) =>Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ProductCard(title: list_Product[index].title, image:  list_Product[index].image, price:  list_Product[index].price,press: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productDetails: list_Product[index]),));
+                  child: ProductCard(title: cart.products[index].title, image: cart.products [index].image, price:  cart.products[index].price,press: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productDetails:cart.products[index],index: index,),));
                   }),
                 )),
                ),
-             ) 
+             ),
+          )
       ],
     );
   }

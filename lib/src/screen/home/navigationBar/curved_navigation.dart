@@ -25,13 +25,14 @@ class _BtnNavBarState extends State<BtnNavBar> {
    
       return ValueListenableBuilder(valueListenable: indexChangeBtmNav, builder:(context,int newIndex, _) {
         return CurvedNavigationBar(
+        
           
-        backgroundColor: Colors.transparent,
-        color: tButtonColor ,
+        backgroundColor: Color.fromARGB(0, 252, 241, 241),
+        color:t2Color ,
            
         
         items: const [
-              Icon(Icons.home), 
+              Icon(Icons.home, ),  
               
               Icon(Icons.favorite),
               Icon(Icons.shopping_cart),

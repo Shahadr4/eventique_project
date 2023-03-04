@@ -18,8 +18,12 @@ class SectionTile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title ,style: tHeading2,),
-        TextButton(onPressed:pressSeeAll, child: const Text("See All"))
+        Text(title ,style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 26,
+          color: Colors.white  
+        ),),
+        TextButton(onPressed:pressSeeAll, child: const Text("See All",style: TextStyle(color: Colors.white),))
       ],
     );
   }
