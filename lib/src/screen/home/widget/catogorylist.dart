@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../const/fonts.dart';
+import '../../../const/fonts.dart';
 
 class CatogoryCard extends StatelessWidget {
   const CatogoryCard({

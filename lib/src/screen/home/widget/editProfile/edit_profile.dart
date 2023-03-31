@@ -11,41 +11,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../const/color.dart';
+import '../../../../const/color.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({
     super.key,
   });
 
-
-
   @override
   State<EditProfile> createState() => _EditProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> { 
-
-  @override
-  void initState() {
-    // TODO: implement initState
-  
-    super.initState();
-  }
-
- 
-
-
-  
+class _EditProfileState extends State<EditProfile> {
   final cuser = FirebaseAuth.instance.currentUser!;
 
    final _nameController = TextEditingController();
+
    final _phoneController = TextEditingController();
- 
-  
+
    //form Key Declare
   final formKey = GlobalKey<FormState>();
-  
+
   updating() {
      
     
@@ -60,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
      
       try{
          document.update(dataToUpdate);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => HomeMain(),
@@ -88,6 +74,7 @@ class _EditProfileState extends State<EditProfile> {
         
          content: Text(message,style: const TextStyle(color: Colors.red),)));
   }
+
   void showSucccec(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(behavior: SnackBarBehavior.floating,

@@ -37,14 +37,13 @@ class SavedAdres extends StatefulWidget {
   State<SavedAdres> createState() => _SavedAdresState();
 
 }
- late DocumentReference _reference;
+late DocumentReference _reference;
 late CollectionReference _referenceAdress;
 class _SavedAdresState extends State<SavedAdres>  {
 
-  //controller 
-  late final AnimationController _controller;
+ 
 
-  bool adressAnim =false;
+   
   
   // text fields' controllers
   final TextEditingController _houseController = TextEditingController();
@@ -71,11 +70,11 @@ class _SavedAdresState extends State<SavedAdres>  {
       _houseController.text = documentSnapshot['housename'];
       _pinController.text = documentSnapshot['pin'];
       _cityController.text = documentSnapshot['city'];
-      _state.text = documentSnapshot['state'];
+      _state.text = documentSnapshot['state']; 
     }
 
     await showModalBottomSheet(
-        backgroundColor: tButtonColor,
+        backgroundColor: Color.fromARGB(255, 203, 203, 203), 
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
@@ -195,58 +194,30 @@ class _SavedAdresState extends State<SavedAdres>  {
   }
 
   // Deleteing a product by id
-  Future<void> _deleteProduct(String productId) async {
-    await _referenceAdress.doc(productId).delete();
+  Future<void> _deleteProduct(String addressId) async {
+    await _referenceAdress.doc(addressId).delete(); 
 
     // Show a snackbar
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('You have successfully deleted'))); 
   }
-   late bool _isloading;
-   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-     _isloading = true;
-    Future.delayed(const Duration(seconds: 3),(){  
-      setState(() {
-        
-        _isloading = false;
-      }); 
-
-    }); 
    
-    
-
-
-  }
-
 
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.white, 
       // Using StreamBuilder to display all products from Firestore in real-time
       body: 
-       _isloading ?
-               Center(
-                 child: SpinKitFadingCircle(
-                 itemBuilder: (BuildContext context, int index) {
-                   return DecoratedBox(
-                     decoration: BoxDecoration(
-                       color: index.isEven ? Color.fromARGB(255, 237, 236, 236) : Color.fromARGB(255, 0, 0, 0),
-                     ),
-                   );
-                 },
-               ),
-               ): 
+      
       Stack(
         
         children: [
-          Center(child: Lottie.network("https://assets5.lottiefiles.com/packages/lf20_ovwsvehd.json",
+          Center(child:Image.asset("assets/5180205.jpg")    
           
-          )), 
+          ), 
           
           StreamBuilder(
             stream: _referenceAdress.snapshots(),
