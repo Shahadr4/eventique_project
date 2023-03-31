@@ -1,21 +1,20 @@
 
-import 'package:eventique/src/const/color.dart';
-import 'package:eventique/src/model/cart.dart';
-import 'package:eventique/src/model/product.dart';
+
+import 'package:eventique/src/provider/product_provider.dart';
+
+
+
 import 'package:eventique/src/screen/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-if(!Hive.isAdapterRegistered(ProductAdapter().typeId)){
-  Hive.registerAdapter(ProductAdapter());
-}
+
   
 await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -28,7 +27,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context) => Cart(),
+    return MultiProvider(providers: [ 
+    
+       ChangeNotifierProvider.value(value: ProductProvider.initialize()), 
+     
+    ],
     child:  MaterialApp(
 
       debugShowCheckedModeBanner: false,

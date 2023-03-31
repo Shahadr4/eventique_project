@@ -1,11 +1,8 @@
 
-import 'dart:ffi';
 
-import 'package:eventique/src/const/color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../const/fonts.dart';
+import '../../../const/fonts.dart';
 
 class ProductCard extends StatelessWidget {
    ProductCard({
@@ -17,7 +14,7 @@ class ProductCard extends StatelessWidget {
   });
   final String title,image;
   final VoidCallback press;
-   double price;
+   double price; 
 
   @override
   Widget build(BuildContext context) {
@@ -49,21 +46,26 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Column(  
                   
-                crossAxisAlignment: CrossAxisAlignment.center,   
+                crossAxisAlignment: CrossAxisAlignment.center,  
+                
+                   
                 children: [ 
-                  Padding(
+                  Padding( 
                     padding: const EdgeInsets.all(5), 
                     child: Text(
                       title,
                       style: tSubHeading,
                     ),
                   ),
-                  Text(
-                    "\$ $price",
-                    style: tHeading2,
+                
+                  Center(
+                    child: Text(
+                      "\₹ $price",
+                      style: tHeading2,
+                    ),
                   )
                 ],
               ),

@@ -1,9 +1,10 @@
 
 import 'package:eventique/src/screen/home/Homepage/home_screen.dart';
-import 'package:eventique/src/screen/home/wishlist/favourite.dart';
+
 import 'package:eventique/src/screen/home/cart/cart.dart';
 import 'package:eventique/src/screen/home/navigationBar/curved_navigation.dart';
 import 'package:eventique/src/screen/home/profile/profile.dart';
+import 'package:eventique/src/screen/home/wishlist/favourite.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,15 +13,15 @@ class HomeMain extends StatelessWidget {
    final _pages =[
 
 
-    const HomeScreen(),
+     HomeScreen(),
     const Favourite(),
     CartPage(),
-    Profile()
+    const Profile()
 
 
 
   ];
-
+ 
   @override
   Widget build(BuildContext context) {
 

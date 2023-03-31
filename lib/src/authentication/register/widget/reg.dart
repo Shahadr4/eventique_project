@@ -120,7 +120,7 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          surfaceTintColor: Colors.transparent, 
+          backgroundColor: Colors.transparent, 
           title: Text("Please choose an option"),
           content: Column(
             mainAxisSize: MainAxisSize.min,

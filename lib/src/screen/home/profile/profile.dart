@@ -7,8 +7,7 @@ import 'package:eventique/src/const/color.dart';
 import 'package:eventique/src/const/fonts.dart';
 import 'package:eventique/src/const/size.dart';
 
-import 'package:eventique/src/screen/home/profile/widgets/editProfile/edit_profile.dart';
-import 'package:eventique/src/screen/home/profile/widgets/profile_menu_list.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 // ignore: library_prefixes
@@ -23,6 +22,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 import '../adress/saved_adress.dart';
+import '../widget/editProfile/edit_profile.dart';
+import '../widget/profile_menu_list.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {
@@ -57,18 +58,20 @@ class _ProfileState extends State<Profile> {
     // ignore: todo 
     // TODO: implement initState 
     super.initState();
-      getDataFromDatabase();   
+      getDataFromDatabase();
+      updateProfileImageonUserExitPst();  
     _isloading = true;
-    Future.delayed(const Duration(seconds: 5),(){ 
+    Future.delayed(const Duration(seconds: 1),(){     
       setState(() {
         
         _isloading = false;
+        
       }); 
 
     });
     
    
-    updateProfileImageonUserExitPst(); 
+    
     
   
     
@@ -189,11 +192,11 @@ class _ProfileState extends State<Profile> {
 
   //showimageDailog
   void imagePick() {
-    showDialog(
+    showDialog( 
       context: context,
       builder: (context) {
         return AlertDialog(
-          surfaceTintColor: Colors.transparent, 
+         
           title: const Text("Please choose an option"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -264,10 +267,6 @@ class _ProfileState extends State<Profile> {
             child: Column(
              
               children: [
-               
-             
-
-                 
                  
                 Stack(
                   alignment: Alignment.bottomCenter,  
@@ -293,9 +292,9 @@ class _ProfileState extends State<Profile> {
                        
                        radius: 66, 
                         backgroundImage:
-                        imageXFile == null   ? NetworkImage(imageUrl!)
+                        imageXFile == null    ? NetworkImage(imageUrl!)
                         :
-                        Image.file(imageXFile!).image,
+                        Image.file(imageXFile!).image, 
                         
                       ),
                     ),

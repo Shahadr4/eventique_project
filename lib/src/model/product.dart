@@ -1,41 +1,39 @@
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-part 'product.g.dart'; 
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 
-@HiveType(typeId: 1)
+
 class Product {
-  @HiveField(0)
-  String image;
-  @HiveField(1)
-  String title;
-  @HiveField(2)
-  double price;
 
+  String image;
+  String title;
+  double price;
+  bool? isFavorite; 
+  String? size;
+  bool popular;
+  
+  // List<String> keywords;
+ 
   Product({
-    required this.title,
+    required this.title, 
     required this.image,
     required this.price,
+    this.isFavorite = false,
+    this.size,
+    required this.popular
+    // required this.keywords
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'image': image,
-      'price': price,
-    };
-  }
-
-  factory Product.fromMap(Map<String, dynamic> map) {
+  factory Product.fromFirestore(DocumentSnapshot data) {
     return Product(
-      title: map['title'],
-      image: map['image'],
-      price: map['price'],
+      title: data['title'] ?? '',
+      image: data['image'] ?? '',
+      price: (data['price'] ?? 0.0).toDouble(),
+      popular:data['popular'] ?? false,
+      
+      // keywords:   List<String>.from(data['keyword'])  
     );
   }
-}
-
-
-
-
+}  
