@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 import 'package:flutter/material.dart';
@@ -10,18 +11,32 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../provider/product_provider.dart';
-import '../../../services/cart_services.dart';
+
 
 class CartPage extends StatefulWidget {
-  const CartPage({
-    super.key,
-  });
+ CartPage({
+    
+    Key? key,
+    
 
+    }):super(key: key){
+      _reference =FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid);
+      _collectionReference =_reference.collection("cart");
+      
+        
+      
+
+      
+
+
+    } 
+    
   @override
   State<CartPage> createState() => _CartPageState();
 }
+late DocumentReference _reference;
+late CollectionReference _collectionReference;
 
-CartServices cartServices = CartServices();
 
 class _CartPageState extends State<CartPage> {
   late Razorpay _razorpay;
@@ -75,7 +90,7 @@ class _CartPageState extends State<CartPage> {
       ),
     );
 
-    cartServices.clearCollection();
+    clearCollection();  
   }
 
   void _handlepaymentError(PaymentFailureResponse response) {
@@ -114,7 +129,7 @@ class _CartPageState extends State<CartPage> {
         )),
       ),
       body: StreamBuilder(
-        stream: cartCollection.snapshots(),
+        stream: _collectionReference.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData && streamSnapshot.data!.docs.isNotEmpty) {
             return Column(
@@ -152,7 +167,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                               onPressed: () =>
                                   Provider.of<ProductProvider>(context, listen: false)
-                                      .removeProduct(documentSnapshot.id),
+                                      .removeProduct(documentSnapshot.id,_reference.id )
                             ),
                           ),
                         ),
@@ -166,7 +181,7 @@ class _CartPageState extends State<CartPage> {
                 Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 65),
                     child: FutureBuilder<double>(
-                      future: cartServices.calculateTotalPrice(),
+                      future: calculateTotalPrice(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Container(
@@ -249,4 +264,30 @@ class _CartPageState extends State<CartPage> {
     super.dispose();
     _razorpay.clear();
   }
+
+
+  
+Future<double> calculateTotalPrice() async {
+  double totalPrice = 0;
+  QuerySnapshot querySnapshot = await _collectionReference.get();
+  for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+    totalPrice += documentSnapshot['price'];
+  }
+
+  return  double.parse(totalPrice.toStringAsFixed(2));
 }
+
+Future<void> clearCollection() async {
+  final QuerySnapshot querySnapshot = await _collectionReference.get();
+  final List<DocumentSnapshot> documents = querySnapshot.docs; 
+  for (DocumentSnapshot document in documents) {
+    await document.reference.delete();
+  }
+}
+ 
+
+}
+
+
+
+

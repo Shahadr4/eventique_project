@@ -11,17 +11,16 @@ import 'package:flutter/foundation.dart';
 
 class ProductProvider extends ChangeNotifier {
 
- //carting and liked button
 
 
-final  users =FirebaseAuth.instance.currentUser;
-late CollectionReference cartCollection = FirebaseFirestore.instance.collection('users').doc(users!.uid).collection('cart');
-late CollectionReference likeCollection = FirebaseFirestore.instance.collection('users').doc(users!.uid).collection("Favourite");
+
 
 
  
 
-  Future<void> addProduct(Product prd, String? size) async {
+  Future<void> addProduct(Product prd, String? size,String? uid) async {
+    late CollectionReference cartCollection = FirebaseFirestore.instance.collection('users').doc(uid).collection('cart');
+
     prd.size = size;
 
     await cartCollection.add({
@@ -33,7 +32,8 @@ late CollectionReference likeCollection = FirebaseFirestore.instance.collection(
     }); 
   } 
 
-  Future<void> addToLike(Product product)async{
+  Future<void> addToLike(Product product,String uid)async{
+    late CollectionReference likeCollection = FirebaseFirestore.instance.collection('users').doc(uid).collection("Favourite");
      if (likeCollection == null) return; 
    
 
@@ -64,7 +64,8 @@ late CollectionReference likeCollection = FirebaseFirestore.instance.collection(
      
 
  
-  Future<void> removeProduct(String cartId) async  {
+  Future<void> removeProduct(String cartId,String uid) async  {
+    late CollectionReference cartCollection = FirebaseFirestore.instance.collection('users').doc(uid).collection('cart');
      if (cartCollection == null) return;
    
     await cartCollection.doc(cartId).delete();

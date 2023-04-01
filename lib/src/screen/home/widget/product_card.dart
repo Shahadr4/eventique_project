@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../const/fonts.dart';
 
+// ignore: must_be_immutable
 class ProductCard extends StatelessWidget {
    ProductCard({
     required this.title,
@@ -39,9 +40,10 @@ class ProductCard extends StatelessWidget {
                     color: Color.fromARGB(255, 255, 251, 251),
                     borderRadius:
                         BorderRadius.all(Radius.circular(10))),
+
                 child: Image.network(
-                 image,
-                  height: 132,
+                 image, 
+                  height: 140,
                 ),
               ),
             ),

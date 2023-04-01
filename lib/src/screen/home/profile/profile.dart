@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
   String name ='';
   String phone =''; 
   File? imageXFile ;
-  String? imageUrl ='';
+  String? imageUrl =''; 
   String? userImageUrl;  
   final imagePicker =ImagePicker(); 
 
@@ -98,15 +98,16 @@ class _ProfileState extends State<Profile> {
         
     
     
-    });
+    }); 
  
     
   }
 
   void updateprofilePic()async{
-    String  fileName=DateTime.now().microsecondsSinceEpoch.toString();
-    fStrorage.Reference reference=fStrorage.FirebaseStorage.instance.ref().child('userImages/profile').child(fileName+".jpg");
-    fStrorage.UploadTask uploadTask=reference.putFile(File(imageXFile!.path));
+
+   
+    fStrorage.Reference reference=fStrorage.FirebaseStorage.instance.ref().child('userImages/profile').child("${user.email} .jpg");
+    fStrorage.UploadTask uploadTask=reference.putFile(File(imageXFile!.path)); 
 
     fStrorage.TaskSnapshot taskSnapshot=await uploadTask.whenComplete(() {});
     

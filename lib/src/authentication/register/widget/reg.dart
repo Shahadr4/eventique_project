@@ -53,7 +53,8 @@ class _RegisterState extends State<Register> {
 
             
             );
-        final ref =FirebaseStorage.instance.ref().child('userImages/profile').child(users.id+".jpg");
+         
+        final ref =FirebaseStorage.instance.ref().child('userImages/profile').child(_userEmailController.text.trim()+".jpg");
         await ref.putFile(imageFile!);
         imgUrl= await ref.getDownloadURL();
 
@@ -119,7 +120,7 @@ class _RegisterState extends State<Register> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return AlertDialog(   
           backgroundColor: Colors.transparent, 
           title: Text("Please choose an option"),
           content: Column(
