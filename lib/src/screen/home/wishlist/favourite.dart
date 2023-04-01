@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventique/src/model/product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
  
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,14 +11,30 @@ import '../../../const/size.dart';
 
 import '../widget/detials_screen.dart';
 import '../widget/product_card.dart';
-
+ 
 
 class Favourite extends StatefulWidget {
-  const Favourite({super.key});
+ Favourite({
+    
+    Key? key,
+    
 
+    }):super(key: key){
+      _reference =FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid);
+      _collectionReference =_reference.collection("Favourite"); 
+      
+        
+      
+
+      
+
+
+    } 
   @override
   State<Favourite> createState() => _FavouriteState();
 }
+late DocumentReference _reference;
+late CollectionReference _collectionReference;
 
 class _FavouriteState extends State<Favourite> {
    @override
@@ -44,8 +61,8 @@ class _FavouriteState extends State<Favourite> {
     body:
     
     
-    StreamBuilder(
-      stream: likeCollection.snapshots(),
+    StreamBuilder( 
+      stream: _collectionReference.snapshots(),
       builder:(context,AsyncSnapshot<QuerySnapshot> streamSnapshot) {
         if (streamSnapshot.hasData && streamSnapshot.data!.docs.isNotEmpty) {
 
@@ -88,7 +105,7 @@ class _FavouriteState extends State<Favourite> {
                       ]
                     ),
                      child: IconButton(onPressed: () async{
-                      await likeCollection.doc(documentSnapshot.id).delete();
+                      await _collectionReference.doc(documentSnapshot.id).delete();
                       setState(() {
                         
                       });

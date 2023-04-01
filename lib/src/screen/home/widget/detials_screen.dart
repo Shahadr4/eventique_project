@@ -5,7 +5,7 @@ import 'package:eventique/src/const/size.dart';
 import 'package:eventique/src/model/product.dart';
 import 'package:eventique/src/screen/home/widget/sizedot_widget.dart';
 
-import 'package:eventique/src/services/cart_services.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,12 @@ import '../../../provider/product_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   DetailScreen({Key? key, required this.productDetails, }) 
-      : super(key: key);
+      : super(key: key){
+          _reference =FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid);
+      _collectionReference =_reference.collection("Favourite"); 
+      
+
+      }
   final Product productDetails;
 
   @override
@@ -26,19 +31,16 @@ class DetailScreen extends StatefulWidget {
 
   
 }
+late DocumentReference _reference;
+late CollectionReference _collectionReference;
 
-   final user = FirebaseAuth.instance.currentUser!;
-    CollectionReference likeCollection = FirebaseFirestore.instance
-      .collection("users")
-      .doc(user.uid)
-      .collection("Favourite");
+  
 
 class _DetailScreenState extends State<DetailScreen> {
 
          
 
 
-  CartServices cartServices = CartServices();
 
 
   String? _selectedSize;
@@ -70,11 +72,11 @@ class _DetailScreenState extends State<DetailScreen> {
         actions: [  
          IconButton(
            onPressed: () async {
-             await Provider.of<ProductProvider>(context, listen: false).addToLike(widget.productDetails); 
+             await Provider.of<ProductProvider>(context, listen: false).addToLike(widget.productDetails,FirebaseAuth.instance.currentUser!.uid); 
             
            },
            icon:  StreamBuilder(
-    stream: likeCollection
+    stream: _collectionReference
         .where('name', isEqualTo: widget.productDetails.title)
         .snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -202,14 +204,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: ElevatedButton(
               onPressed: isSizeSelected ? () {
                 
- 
+       
                
-                   Provider.of<ProductProvider>(context, listen: false).addProduct(widget.productDetails,_selectedSize);
-
+                   Provider.of<ProductProvider>(context, listen: false).addProduct(widget.productDetails,_selectedSize,FirebaseAuth.instance.currentUser!.uid);
+      
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     behavior: SnackBarBehavior.floating,
-                 
+                  
                     content: Text(
                         '${widget.productDetails.title} added to cart'),
                     duration: const Duration(seconds: 1),

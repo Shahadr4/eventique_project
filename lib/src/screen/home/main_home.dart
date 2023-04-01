@@ -14,7 +14,7 @@ class HomeMain extends StatelessWidget {
 
 
      HomeScreen(),
-    const Favourite(),
+     Favourite(),
     CartPage(),
     const Profile()
 
