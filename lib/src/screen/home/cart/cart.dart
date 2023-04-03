@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventique/src/screen/home/paynow/adress_selection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../../provider/product_provider.dart';
 
@@ -39,79 +39,15 @@ late CollectionReference _collectionReference;
 
 
 class _CartPageState extends State<CartPage> {
-  late Razorpay _razorpay;
+  // late Razorpay _razorpay;
   @override
   void initState() {
     // ignore: todo
     // TODO: implement initState
     super.initState();
-    initializeRazorpay();
+   // initializeRazorpay();
   }
 
-  void initializeRazorpay() {
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlepaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlepaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  }
-
-  void launchRazorpay(
-    String amount,
-    
-  ) {
-    double amnt = double.parse(amount) * 100;
-    var options = {
-      'key': "rzp_test_h0z4xuMxf2yEK3",
-      'amount': amnt,
-      'phone':"ffwfwef",
-      "description": "nothing"
-    };
-    try {
-      _razorpay.open(options);
-    } catch (e) {
- ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Text(e.toString()),
-        duration: const Duration(seconds: 1),
-      ),
-    );
-      
-      
-    }
-  }
-
-  void _handlepaymentSuccess(PaymentSuccessResponse response) {
-    ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Text("payment success${response.orderId}\n ${response.paymentId}\n${response.signature}"),
-        duration: Duration(seconds: 1),
-      ),
-    );
-
-    clearCollection();  
-  }
-
-  void _handlepaymentError(PaymentFailureResponse response) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Text("payment Failed" , style: TextStyle(color: Colors.red)),
-        duration: Duration(seconds: 1), 
-      ),
-    );
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Text("payment Failed", style: TextStyle(color: Colors.red),),
-        duration: Duration(seconds: 1),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +69,7 @@ class _CartPageState extends State<CartPage> {
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData && streamSnapshot.data!.docs.isNotEmpty) {
             return Column(
+
               children: [
                 Expanded(
                   child: ListView.builder(
@@ -211,12 +148,15 @@ class _CartPageState extends State<CartPage> {
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                  ],
+                                  ], 
                                 ),
                                 //paynow
                                 GestureDetector(
-                                  onTap: () =>
-                                      launchRazorpay(snapshot.data.toString()),
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdressSelectiom(amount:snapshot.data.toString() ),));
+                                  },
+                                  // onTap: () =>
+                                  //     launchRazorpay(snapshot.data.toString()),
                                   child: Container(
                                     decoration: BoxDecoration(
                                         border: Border.all(
@@ -257,13 +197,6 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  @override
-  void dispose() {
-    // ignore: todo
-    // TODO: implement dispose
-    super.dispose();
-    _razorpay.clear();
-  }
 
 
   

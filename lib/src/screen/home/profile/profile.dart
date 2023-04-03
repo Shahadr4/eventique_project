@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:eventique/src/provider/user_providers.dart';
+import 'package:eventique/src/screen/home/orderList/orders_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +22,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper2/image_cropper2.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../adress/saved_adress.dart';
 import '../widget/editProfile/edit_profile.dart';
@@ -46,9 +49,9 @@ class _ProfileState extends State<Profile> {
 
   
   String name ='';
-  String phone =''; 
+  
   File? imageXFile ;
-  String? imageUrl =''; 
+   
   String? userImageUrl;  
   final imagePicker =ImagePicker(); 
 
@@ -59,7 +62,9 @@ class _ProfileState extends State<Profile> {
     // TODO: implement initState 
     super.initState();
       getDataFromDatabase();
-      updateProfileImageonUserExitPst();  
+      updateProfileImageonUserExitPst(); 
+     
+
     _isloading = true;
     Future.delayed(const Duration(seconds: 1),(){     
       setState(() {
@@ -90,8 +95,7 @@ class _ProfileState extends State<Profile> {
         setState(() {
            
           name = data['name'];
-          phone = data['phone']; 
-          imageUrl =data['imageUrl'];
+        
         });
       }  
 
@@ -249,7 +253,12 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    //logout
+    final productprovider = Provider.of<UsersProvider>(context);
+    productprovider.getUser();
+ 
+    var userData=productprovider.currentUser;
+
+    //logout 
     void logout() {
       FirebaseAuth.instance.signOut();
     }
@@ -293,7 +302,7 @@ class _ProfileState extends State<Profile> {
                        
                        radius: 66, 
                         backgroundImage:
-                        imageXFile == null    ? NetworkImage(imageUrl!)
+                        imageXFile == null    ? NetworkImage(userData!.image)
                         :
                         Image.file(imageXFile!).image, 
                         
@@ -327,12 +336,12 @@ class _ProfileState extends State<Profile> {
                   height: 10,
                 ),
 
-                Text(
-                  name,  
+                Text( 
+                  userData!.name,  
                   style: tHeading1,
                 ),
                 Text(
-                  'Phone: '+phone ,
+                  'Phone: '+userData.phone ,
                   style: GoogleFonts.workSans(fontSize: 20),
                 ),
 
@@ -381,7 +390,9 @@ class _ProfileState extends State<Profile> {
                 ProfileMenuList(
                   title: "Order",
                   icon: Lottie.network("https://assets5.lottiefiles.com/packages/lf20_gBPGEvXqJu.json"),
-                  onPress: () {}, 
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrdersList(index: 1),));
+                  }, 
                 ),
 
                 const SizedBox(
