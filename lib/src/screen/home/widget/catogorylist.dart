@@ -20,9 +20,19 @@ final VoidCallback press;
       onTap: press, 
       child: CircleAvatar(  
         maxRadius: 40 ,     
-         
+          
         backgroundImage: NetworkImage(image),
-        child: Text(title,  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title, style: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontStyle:FontStyle.italic ,
+      fontSize: 17,
+      color:  Color.fromARGB(255, 243, 245, 246),   
+    ), ),
+          ],
+        ),
       ),
     );
   }

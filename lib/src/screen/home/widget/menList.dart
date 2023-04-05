@@ -10,9 +10,9 @@ import 'package:provider/provider.dart';
 import '../../../provider/product_provider.dart';
 
 
-class Popular extends StatelessWidget {
-   const Popular({
-    super.key,
+class Men extends StatelessWidget {
+   const Men({
+    super.key, 
   });
   
 
@@ -25,7 +25,7 @@ class Popular extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment. start,
       children: [
         SectionTile( 
-          title:  "Popular",
+          title:  "Men",
         
         ),
           SingleChildScrollView(
@@ -36,10 +36,10 @@ class Popular extends StatelessWidget {
                 
                
                Row( 
-                children: List.generate(cart.popularProduct.length, (index) =>Padding(
+                children: List.generate(cart.menList.length, (index) =>Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ProductCard(title: cart.popularProduct[index].title, image: cart.popularProduct [index].image, price:  cart.popularProduct[index].price,press: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productDetails:cart.popularProduct[index],),));
+                  child: ProductCard(title: cart.menList[index].title, image: cart.menList [index].image, price:  cart.menList[index].price,press: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productDetails:cart.menList[index],),));
                   }),
                 )),
                ),

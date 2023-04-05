@@ -1,28 +1,27 @@
+import 'dart:ui';
 
-
+import 'package:eventique/src/const/fonts.dart';
 import 'package:flutter/material.dart';
 
-import '../../../const/fonts.dart';
-
-// ignore: must_be_immutable
-class ProductCard extends StatelessWidget {
-   ProductCard({
-    required this.title,
+class OderedCart extends StatelessWidget {
+   OderedCart({
+    required this.title, 
     required this.image,
     required this.price,
-    required this.press,
+    required this.size,
+
     super.key,
   });
-  final String title,image;
-  final VoidCallback press;
+  final String title,image,size;
+
    double price; 
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:press,
+      
       child: Container(
-        width: 145, 
+        width: 130  , 
         height: 230,   
         padding: const EdgeInsets.all(1),
       
@@ -33,7 +32,7 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 145,
+              width: 130,
               height: 145,
             
               child: Container(
@@ -66,9 +65,15 @@ class ProductCard extends StatelessWidget {
                   ),
                 
                   Center(
-                    child: Text(
-                      "\₹ $price",
-                      style: tHeading2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+                      children: [
+                        Text(
+                          "\₹ $price",
+                          style: tHeading2,
+                        ),
+                        Text("size:${size}")
+                      ],
                     ),
                   )
                 ],

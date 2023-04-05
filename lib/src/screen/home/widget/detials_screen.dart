@@ -134,7 +134,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ],
                     ),
                     Text(
-                      "fsafefawdetfwetewjt rgjerokjgeijg rgjre[iwhgehjrqwijhy5toihyj jijgrohjwtijhwtjh] ",
+                      widget.productDetails.description,
                       style: tHeading2,
                     ),
                     const SizedBox(
@@ -146,16 +146,17 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     Row(
                       children: [
-                        SizeDot(
+                         SizeDot(
                           size: "S",
                           isActive: _selectedSize == "S",
                           press: () {
                             setState(() {
                               _selectedSize = "S";
                               _onSizeSelected();
-                            });
+                            }); 
                           },
                         ),
+                        
                         SizeDot(
                           size: "M",
                           isActive: _selectedSize == "M",

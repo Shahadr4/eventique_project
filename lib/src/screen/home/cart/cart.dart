@@ -1,7 +1,8 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eventique/src/screen/home/paynow/adress_selection.dart';
+import 'package:eventique/src/provider/user_providers.dart';
+import 'package:eventique/src/screen/home/paynow/paymentPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -51,6 +52,12 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+     final productprovider = Provider.of<UsersProvider>(context);
+     final carted = Provider.of<ProductProvider>(context);
+    productprovider.getUser();
+ 
+    var userData=productprovider.currentUser;
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -84,7 +91,9 @@ class _CartPageState extends State<CartPage> {
                               color: const Color.fromARGB(255, 215, 213, 213),
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(color: Colors.white)),
-                          child: ListTile(
+
+                         
+                          child: ListTile( 
                             leading: Image.network(documentSnapshot["image"]),
                             title: Text(documentSnapshot["name"]),
                             subtitle: Column(
@@ -104,7 +113,8 @@ class _CartPageState extends State<CartPage> {
                               ),
                               onPressed: () =>
                                   Provider.of<ProductProvider>(context, listen: false)
-                                      .removeProduct(documentSnapshot.id,_reference.id )
+                                      .removeProduct(documentSnapshot.id,_reference.id,index )
+                                 
                             ),
                           ),
                         ),
@@ -153,7 +163,7 @@ class _CartPageState extends State<CartPage> {
                                 //paynow
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdressSelectiom(amount:snapshot.data.toString() ),));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdressSelectiom(amount:snapshot.data.toString() ,username: userData!.name,catrted: carted.carted,phoneNumber: userData.phone),));
                                   },
                                   // onTap: () =>
                                   //     launchRazorpay(snapshot.data.toString()),

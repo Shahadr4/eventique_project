@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Adress{
-  final String adress;
-  final String nation;
+   
+  final String houseName;
   final String state;
   final String postpin;
   final String city;
 
 
-  Adress({required this.adress,required this.nation,required this.state,required this.postpin,required this.city});
+  Adress({required this.houseName,required this.state,required this.postpin,required this.city});
 
-  static Adress fromjson(Map<String,dynamic>json) =>Adress(adress:json['adress'], nation:json['nation'], state:json['state'], postpin:json['postpin'], city:json['city']);
+  factory Adress.fromjson(DocumentSnapshot json) =>Adress(houseName:json['housename'], state:json['state'], postpin:json['pin'], city:json['city']);
   
-}
+} 
