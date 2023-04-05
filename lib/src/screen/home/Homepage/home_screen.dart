@@ -4,8 +4,8 @@ import 'package:eventique/src/const/color.dart';
 import 'package:eventique/src/screen/home/widget/list_catogary.dart';
 
 
-import 'package:eventique/src/screen/home/widget/new_arrival.dart';
-import 'package:eventique/src/screen/home/widget/popular.dart';
+import 'package:eventique/src/screen/home/widget/womwnList.dart';
+import 'package:eventique/src/screen/home/widget/menList.dart';
 import 'package:eventique/src/screen/home/widget/search.dart';
 
 
@@ -67,11 +67,11 @@ class HomeScreen extends StatelessWidget {
                   height: 10,
                 ),
                
-                NewArrival(),
+                WomenList(),
                 const SizedBox(
                   height: 10,
                 ),
-                const Popular(),
+                const Men(),
                 const SizedBox(
                   height: 50,
                 ),

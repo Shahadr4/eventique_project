@@ -75,10 +75,13 @@ class _FavouriteState extends State<Favourite> {
                                 MaterialPageRoute(
                                   builder: (context) => DetailScreen(
                                     productDetails: Product(
+                                     
                                       title: documentSnapshot['name'],
                                       image: documentSnapshot['image'],
                                       price: documentSnapshot['price'],
-                                      popular: documentSnapshot['popular'],
+                        
+                                      gender: documentSnapshot['gender'],
+                                      description: documentSnapshot['description']
                                     ),
                                   ),
                                 ));

@@ -1,26 +1,34 @@
 import 'package:eventique/src/screen/home/widget/customText.dart';
 
-import 'package:eventique/src/screen/home/widget/product_card.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:provider/provider.dart';
 
-import '../../../const/color.dart';
+
  
 import '../../../provider/product_provider.dart';
 import 'detials_screen.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  @override
   Widget build(BuildContext context) {
+
+    String productName = "";
      final productprovider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,  
         elevation: 0, 
+        
+
         title:   ListTile(
           leading: const Icon(
             Icons.search,
@@ -32,10 +40,11 @@ class SearchPage extends StatelessWidget {
               await productprovider.search(productName: pattern);
         
             },
-            decoration: const InputDecoration(
+            decoration: const InputDecoration( 
               hintText: "search...", 
               border: InputBorder.none,
             ),
+        
           ),
         ),
 

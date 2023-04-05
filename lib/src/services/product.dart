@@ -26,6 +26,8 @@ class ProductServices {
     });
   }
 
+  
+
   Future<List<Product>> searchProducts({required String productName}) {
     // code to convert the first character to uppercase
 
@@ -45,6 +47,7 @@ class ProductServices {
         });
   }
 
+
   //getting product of Category list
 
     Future<List<Product>> getProductsOfCategory({required String categories}) async =>
@@ -62,10 +65,23 @@ class ProductServices {
 
 
 
-   Future<List<Product>> getPopularList() async =>
+   Future<List<Product>> getMenList() async =>
       FirebaseFirestore.instance
           .collection("products")
-          .where("popular", isEqualTo: true)
+          .where("gender", isEqualTo: 'Men')
+          .get()
+          .then((result) {
+        List<Product> products = [];
+        for (DocumentSnapshot product in result.docs) {
+          products.add(Product.fromFirestore(product));
+        }
+        return products;
+      });  
+
+ Future<List<Product>> getwomenList() async =>
+      FirebaseFirestore.instance
+          .collection("products")
+          .where("gender", isEqualTo: 'Women')
           .get()
           .then((result) {
         List<Product> products = [];
@@ -76,6 +92,19 @@ class ProductServices {
       });
 
 
+
+   Future<List<Product>> getOdersList() async =>
+      FirebaseFirestore.instance
+          .collection("products")
+          .where("gender", isEqualTo: 'Men')
+          .get()
+          .then((result) {
+        List<Product> products = [];
+        for (DocumentSnapshot product in result.docs) {
+          products.add(Product.fromFirestore(product));
+        }
+        return products;
+      });  
 
     
 

@@ -1,5 +1,5 @@
 
-
+ 
 import 'package:eventique/src/provider/product_provider.dart';
 import 'package:eventique/src/provider/user_providers.dart';
 
@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [ 
     
        ChangeNotifierProvider.value(value: ProductProvider.initialize()), 
-       ChangeNotifierProvider.value(value: UsersProvider.initialize())
+       ChangeNotifierProvider.value(value: UsersProvider.initialize()),
+        
+      
      
     ], 
     child:  MaterialApp(
